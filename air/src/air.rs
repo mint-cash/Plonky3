@@ -152,9 +152,9 @@ pub trait PermutationAirBuilder: ExtensionBuilder {
 
     type RandomVar: Into<Self::ExprEF> + Copy;
 
-    fn permutation(&self) -> Self::MP;
+    fn permutation(&self) -> &[Self::MP];
 
-    fn permutation_randomness(&self) -> &[Self::RandomVar];
+    fn permutation_randomness(&self) -> &[&[Self::RandomVar]];
 }
 
 #[derive(Debug)]
@@ -209,11 +209,11 @@ impl<'a, AB: PermutationAirBuilder> PermutationAirBuilder for FilteredAirBuilder
 
     type RandomVar = AB::RandomVar;
 
-    fn permutation(&self) -> Self::MP {
+    fn permutation(&self) -> &[Self::MP] {
         self.inner.permutation()
     }
 
-    fn permutation_randomness(&self) -> &[Self::RandomVar] {
+    fn permutation_randomness(&self) -> &[&[Self::RandomVar]] {
         self.inner.permutation_randomness()
     }
 }
