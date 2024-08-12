@@ -147,14 +147,19 @@ pub trait ExtensionBuilder: AirBuilder {
     }
 }
 
-pub trait PermutationAirBuilder<const NUM_PERMS: usize>: ExtensionBuilder {
+#[derive(Debug)]
+pub enum PermutationError {
+    InvalidVariant,
+}
+
+pub trait PermutationAirBuilder<PT>: ExtensionBuilder {
     type MP: Matrix<Self::VarEF>;
 
     type RandomVar: Into<Self::ExprEF> + Copy;
 
-    fn permutation(&self) -> [Self::MP; NUM_PERMS];
+    fn permutation(&self, perm_type: PT) -> Result<Self::MP, PermutationError>;
 
-    fn permutation_randomness(&self) -> [&[Self::RandomVar]; NUM_PERMS];
+    fn permutation_randomness(&self, perm_type: PT) -> Result<&[Self::RandomVar], PermutationError>;
 }
 
 #[derive(Debug)]
@@ -204,17 +209,19 @@ impl<'a, AB: ExtensionBuilder> ExtensionBuilder for FilteredAirBuilder<'a, AB> {
     }
 }
 
-impl<'a, AB: PermutationAirBuilder<NUM_PERMS>, const NUM_PERMS: usize> PermutationAirBuilder<NUM_PERMS> for FilteredAirBuilder<'a, AB> {
+impl<'a, AB: PermutationAirBuilder<PT>, PT>
+    PermutationAirBuilder<PT> for FilteredAirBuilder<'a, AB>
+{
     type MP = AB::MP;
 
     type RandomVar = AB::RandomVar;
 
-    fn permutation(&self) -> [Self::MP; NUM_PERMS] {
-        self.inner.permutation()
+    fn permutation(&self, perm_type: PT) -> Result<Self::MP, PermutationError> {
+        self.inner.permutation(perm_type)
     }
 
-    fn permutation_randomness(&self) -> [&[Self::RandomVar]; NUM_PERMS] {
-        self.inner.permutation_randomness()
+    fn permutation_randomness(&self, perm_type: PT) -> Result<&[Self::RandomVar], PermutationError> {
+        self.inner.permutation_randomness(perm_type)
     }
 }
 
