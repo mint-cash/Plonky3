@@ -22,4 +22,4 @@ p3-dft = { path = "../dft", optional = true }
 [dev-dependencies]
 p3-baby-bear = { path = "../baby-bear" }
 p3-dft = { path = "../dft" }
-rand = "0.8.5"
+rand = { workspace = true }

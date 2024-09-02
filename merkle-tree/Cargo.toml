@@ -23,7 +23,7 @@ p3-mds = { path = "../mds" }
 p3-poseidon2 = { path = "../poseidon2" }
 p3-rescue = { path = "../rescue" }
 criterion = "0.5.1"
-rand = "0.8.5"
+rand = { workspace = true }
 
 [[bench]]
 name = "merkle_tree"

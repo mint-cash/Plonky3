@@ -16,7 +16,7 @@ p3-baby-bear = { path = "../baby-bear" }
 p3-goldilocks = { path = "../goldilocks" }
 p3-mersenne-31 = { path = "../mersenne-31" }
 criterion = "0.5.1"
-rand = "0.8.5"
+rand = { workspace = true }
 
 [[bench]]
 name = "fft"
