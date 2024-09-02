@@ -30,3 +30,6 @@ members = [
     "util",
     "uni-stark",
 ]
+
+[workspace.dependencies]
+tracing = { git = "https://github.com/koute/tracing", branch = "v0.1_tracing_log_no_std", default-features = false }
