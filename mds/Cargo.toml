@@ -10,7 +10,7 @@ p3-field = { path = "../field" }
 p3-matrix = { path = "../matrix" }
 p3-symmetric = { path = "../symmetric" }
 p3-util = { path = "../util" }
-rand = { version = "0.8.5", features = ["min_const_gen"] }
+rand = { workspace = true, features = ["min_const_gen"] }
 itertools = "0.12.0"
 
 [dev-dependencies]
