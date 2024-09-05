@@ -7,4 +7,4 @@ license = "MIT OR Apache-2.0"
 [dependencies]
 p3-field = { path = "../field" }
 itertools = { workspace = true }
-serde = { version = "1.0", default-features = false, features = ["alloc"] }
+serde = { workspace = true, features = ["alloc"] }

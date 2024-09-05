@@ -11,4 +11,4 @@ num-traits = { version = "0.2.18", default-features = false }
 
 itertools = { workspace = true }
 rand = { workspace = true }
-serde = { version = "1.0", default-features = false, features = ["derive"] }
+serde = { workspace = true, features = ["derive"] }

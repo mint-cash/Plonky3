@@ -14,7 +14,7 @@ p3-matrix = { path = "../matrix" }
 p3-util = { path = "../util" }
 
 itertools = { workspace = true }
-serde = { version = "1.0", default-features = false }
+serde = { workspace = true }
 
 # for testing
 p3-dft = { path = "../dft", optional = true }

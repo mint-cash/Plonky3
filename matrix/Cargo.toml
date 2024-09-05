@@ -10,7 +10,7 @@ p3-maybe-rayon = { path = "../maybe-rayon" }
 p3-util = { path = "../util" }
 itertools = { workspace = true }
 rand = { workspace = true }
-serde = { version = "1.0", default-features = true, features = ["derive"] }
+serde = { workspace = true, features = ["derive"] }
 tracing = { workspace = true }
 
 [dev-dependencies]
