@@ -75,8 +75,18 @@ pub trait Matrix<T: Send + Sync>: Send + Sync {
     }
 
     // Opaque return type implicitly captures &'_ self
+    // fn row_slice(&self, r: usize) -> impl Deref<Target = [T]> {
+    //     self.row(r).collect_vec()
+    // }
     fn row_slice(&self, r: usize) -> impl Deref<Target = [T]> {
-        self.row(r).collect_vec()
+        struct RowSlice<T>(Vec<T>);
+        impl<T> Deref for RowSlice<T> {
+            type Target = [T];
+            fn deref(&self) -> &Self::Target {
+                &self.0
+            }
+        }
+        RowSlice(self.row(r).collect())
     }
 
     fn first_row(&self) -> Self::Row<'_> {

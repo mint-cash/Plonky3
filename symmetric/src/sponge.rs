@@ -1,7 +1,12 @@
 use alloc::string::String;
 use core::marker::PhantomData;
 
-use itertools::Itertools;
+// use itertools::Itertools;
+
+use alloc::vec::Vec;
+use core::iter::IntoIterator;
+
+
 use p3_field::{reduce_32, Field, PrimeField, PrimeField32};
 
 use crate::hasher::CryptographicHasher;
@@ -33,12 +38,25 @@ where
     where
         I: IntoIterator<Item = T>,
     {
-        // static_assert(RATE < WIDTH)
         let mut state = [T::default(); WIDTH];
-        for input_chunk in &input.into_iter().chunks(RATE) {
-            state.iter_mut().zip(input_chunk).for_each(|(s, i)| *s = i);
+        let mut input_iter = input.into_iter();
+
+        loop {
+            let mut absorbed = 0;
+            for s in state.iter_mut().take(RATE) {
+                if let Some(i) = input_iter.next() {
+                    *s = i;
+                    absorbed += 1;
+                } else {
+                    break;
+                }
+            }
+            if absorbed == 0 {
+                break;
+            }
             state = self.permutation.permute(state);
         }
+
         state[..OUT].try_into().unwrap()
     }
 }
@@ -93,12 +111,25 @@ where
         I: IntoIterator<Item = F>,
     {
         let mut state = [PF::default(); WIDTH];
-        for block_chunk in &input.into_iter().chunks(RATE) {
-            for (chunk_id, chunk) in (&block_chunk.chunks(self.num_f_elms))
-                .into_iter()
-                .enumerate()
-            {
-                state[chunk_id] = reduce_32(&chunk.collect_vec());
+        let mut input_iter = input.into_iter();
+        let mut temp_chunk = Vec::with_capacity(self.num_f_elms);
+
+        'outer: loop {
+            for chunk_id in 0..RATE {
+                temp_chunk.clear();
+                for _ in 0..self.num_f_elms {
+                    if let Some(item) = input_iter.next() {
+                        temp_chunk.push(item);
+                    } else {
+                        if chunk_id == 0 && temp_chunk.is_empty() {
+                            break 'outer;
+                        }
+                        break;
+                    }
+                }
+                if !temp_chunk.is_empty() {
+                    state[chunk_id] = reduce_32(&temp_chunk);
+                }
             }
             state = self.permutation.permute(state);
         }

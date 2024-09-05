@@ -5,7 +5,6 @@ use core::fmt::{self, Debug, Display, Formatter};
 use core::iter::{Product, Sum};
 use core::ops::{Add, AddAssign, Div, DivAssign, Mul, MulAssign, Neg, Sub, SubAssign};
 
-use itertools::Itertools;
 use num_bigint::BigUint;
 use rand::distributions::Standard;
 use rand::prelude::Distribution;
@@ -240,20 +239,38 @@ where
         if self.is_zero() {
             write!(f, "0")
         } else {
-            let str = self
-                .value
-                .iter()
-                .enumerate()
-                .filter(|(_, x)| !x.is_zero())
-                .map(|(i, x)| match (i, x.is_one()) {
-                    (0, _) => format!("{x}"),
-                    (1, true) => "X".to_string(),
-                    (1, false) => format!("{x} X"),
-                    (_, true) => format!("X^{i}"),
-                    (_, false) => format!("{x} X^{i}"),
-                })
-                .join(" + ");
-            write!(f, "{}", str)
+            // let str = self
+            //     .value
+            //     .iter()
+            //     .enumerate()
+            //     .filter(|(_, x)| !x.is_zero())
+            //     .map(|(i, x)| match (i, x.is_one()) {
+            //         (0, _) => format!("{x}"),
+            //         (1, true) => "X".to_string(),
+            //         (1, false) => format!("{x} X"),
+            //         (_, true) => format!("X^{i}"),
+            //         (_, false) => format!("{x} X^{i}"),
+            //     })
+            //     .join(" + ");
+            // write!(f, "{}", str)
+
+            let mut first = true;
+            for (i, x) in self.value.iter().enumerate() {
+                if !x.is_zero() {
+                    if !first {
+                        f.write_str(" + ")?;
+                    }
+                    match (i, x.is_one()) {
+                        (0, _) => write!(f, "{x}")?,
+                        (1, true) => f.write_str("X")?,
+                        (1, false) => write!(f, "{x} X")?,
+                        (_, true) => write!(f, "X^{i}")?,
+                        (_, false) => write!(f, "{x} X^{i}")?,
+                    }
+                    first = false;
+                }
+            }
+            Ok(())
         }
     }
 }
