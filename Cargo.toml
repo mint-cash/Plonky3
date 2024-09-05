@@ -34,5 +34,5 @@ members = [
 [workspace.dependencies]
 rand = { version = "0.8.5", default-features = false }
 tracing = { git = "https://github.com/koute/tracing", branch = "v0.1_tracing_log_no_std", default-features = false }
-itertools = { version = "0.13.0", default-features = false }
+itertools = { version = "0.13.0", default-features = false, features = ["use_alloc"]}
 serde = { version = "1.0.207", default-features = false }
