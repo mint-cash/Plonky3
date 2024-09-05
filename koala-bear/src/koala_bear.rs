@@ -541,35 +541,35 @@ mod tests {
         assert_eq!(m2.exp_u64(1420470955).exp_const_u64::<3>(), m2);
         assert_eq!(f_2.exp_u64(1420470955).exp_const_u64::<3>(), f_2);
 
-        let f_serialized = serde_json_core::to_string(&f).unwrap();
-        let f_deserialized: F = serde_json_core::from_str(&f_serialized).unwrap();
+        let f_serialized = serde_json::to_string(&f).unwrap();
+        let f_deserialized: F = serde_json::from_str(&f_serialized).unwrap();
         assert_eq!(f, f_deserialized);
 
-        let f_1_serialized = serde_json_core::to_string(&f_1).unwrap();
-        let f_1_deserialized: F = serde_json_core::from_str(&f_1_serialized).unwrap();
-        let f_1_serialized_again = serde_json_core::to_string(&f_1_deserialized).unwrap();
-        let f_1_deserialized_again: F = serde_json_core::from_str(&f_1_serialized_again).unwrap();
+        let f_1_serialized = serde_json::to_string(&f_1).unwrap();
+        let f_1_deserialized: F = serde_json::from_str(&f_1_serialized).unwrap();
+        let f_1_serialized_again = serde_json::to_string(&f_1_deserialized).unwrap();
+        let f_1_deserialized_again: F = serde_json::from_str(&f_1_serialized_again).unwrap();
         assert_eq!(f_1, f_1_deserialized);
         assert_eq!(f_1, f_1_deserialized_again);
 
-        let f_2_serialized = serde_json_core::to_string(&f_2).unwrap();
-        let f_2_deserialized: F = serde_json_core::from_str(&f_2_serialized).unwrap();
+        let f_2_serialized = serde_json::to_string(&f_2).unwrap();
+        let f_2_deserialized: F = serde_json::from_str(&f_2_serialized).unwrap();
         assert_eq!(f_2, f_2_deserialized);
 
-        let f_p_minus_1_serialized = serde_json_core::to_string(&f_p_minus_1).unwrap();
-        let f_p_minus_1_deserialized: F = serde_json_core::from_str(&f_p_minus_1_serialized).unwrap();
+        let f_p_minus_1_serialized = serde_json::to_string(&f_p_minus_1).unwrap();
+        let f_p_minus_1_deserialized: F = serde_json::from_str(&f_p_minus_1_serialized).unwrap();
         assert_eq!(f_p_minus_1, f_p_minus_1_deserialized);
 
-        let f_p_minus_2_serialized = serde_json_core::to_string(&f_p_minus_2).unwrap();
-        let f_p_minus_2_deserialized: F = serde_json_core::from_str(&f_p_minus_2_serialized).unwrap();
+        let f_p_minus_2_serialized = serde_json::to_string(&f_p_minus_2).unwrap();
+        let f_p_minus_2_deserialized: F = serde_json::from_str(&f_p_minus_2_serialized).unwrap();
         assert_eq!(f_p_minus_2, f_p_minus_2_deserialized);
 
-        let m1_serialized = serde_json_core::to_string(&m1).unwrap();
-        let m1_deserialized: F = serde_json_core::from_str(&m1_serialized).unwrap();
+        let m1_serialized = serde_json::to_string(&m1).unwrap();
+        let m1_deserialized: F = serde_json::from_str(&m1_serialized).unwrap();
         assert_eq!(m1, m1_deserialized);
 
-        let m2_serialized = serde_json_core::to_string(&m2).unwrap();
-        let m2_deserialized: F = serde_json_core::from_str(&m2_serialized).unwrap();
+        let m2_serialized = serde_json::to_string(&m2).unwrap();
+        let m2_deserialized: F = serde_json::from_str(&m2_serialized).unwrap();
         assert_eq!(m2, m2_deserialized);
     }
 
