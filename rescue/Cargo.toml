@@ -8,8 +8,8 @@ license = "MIT OR Apache-2.0"
 gcd = "2.3.0"
 itertools = { workspace = true }
 modinverse = "0.1.1"
-num = "0.4.0"
-num-integer = "0.1.45"
+num = { version = "0.4.3", default-features = false, features = ["alloc"] }
+num-integer = { version = "0.1.45", default_features = false }
 p3-field = { path = "../field" }
 p3-mds = { path = "../mds" }
 p3-symmetric = { path = "../symmetric" }
