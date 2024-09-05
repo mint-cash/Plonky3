@@ -8,7 +8,7 @@ license = "MIT OR Apache-2.0"
 p3-field = { path = "../field" }
 p3-maybe-rayon = { path = "../maybe-rayon" }
 p3-util = { path = "../util" }
-itertools = "0.12.0"
+itertools = { workspace = true }
 rand = { workspace = true }
 serde = { version = "1.0", default-features = true, features = ["derive"] }
 tracing = { workspace = true }
