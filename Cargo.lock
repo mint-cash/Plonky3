@@ -865,7 +865,6 @@ dependencies = [
  "criterion",
  "ff 0.13.0",
  "num-bigint 0.4.6",
- "num-traits",
  "p3-field",
  "p3-field-testing",
  "p3-poseidon2",

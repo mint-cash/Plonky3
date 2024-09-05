@@ -7,8 +7,10 @@ license = "MIT OR Apache-2.0"
 [dependencies]
 p3-util = { path = "../util" }
 num-bigint = { version = "0.4.3", default-features = false }
-num-traits = { version = "0.2.18", default-features = false }
 
 itertools = { workspace = true }
 rand = { workspace = true }
 serde = { workspace = true, features = ["derive"] }
+
+[dev-dependencies]
+num-traits = { version = "0.2.18", default-features = false }

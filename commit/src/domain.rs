@@ -1,6 +1,5 @@
 use alloc::vec::Vec;
 
-use itertools::Itertools;
 use p3_field::{
     batch_multiplicative_inverse, cyclic_subgroup_coset_known_order, ExtensionField, Field,
     TwoAdicField,
@@ -136,24 +135,24 @@ impl<Val: TwoAdicField> PolynomialSpace for TwoAdicMultiplicativeCoset<Val> {
 
         let s_pow_n = coset.shift.exp_power_of_2(self.log_n);
         // evals of Z_H(X) = X^n - 1
-        let evals = Val::two_adic_generator(rate_bits)
+        let evals: Vec<Val> = Val::two_adic_generator(rate_bits)
             .powers()
             .take(1 << rate_bits)
             .map(|x| s_pow_n * x - Val::one())
-            .collect_vec();
+            .collect();
 
-        let xs = cyclic_subgroup_coset_known_order(coset.gen(), coset.shift, 1 << coset.log_n)
-            .collect_vec();
+        let xs: Vec<Val> = cyclic_subgroup_coset_known_order(coset.gen(), coset.shift, 1 << coset.log_n)
+            .collect();
 
         let single_point_selector = |i: u64| {
-            let denoms = xs.iter().map(|&x| x - self.gen().exp_u64(i)).collect_vec();
+            let denoms: Vec<Val> = xs.iter().map(|&x| x - self.gen().exp_u64(i)).collect();
             let invs = batch_multiplicative_inverse(&denoms);
             evals
                 .iter()
                 .cycle()
                 .zip(invs)
                 .map(|(&z_h, inv)| z_h * inv)
-                .collect_vec()
+                .collect()
         };
 
         let subgroup_last = self.gen().inverse();
